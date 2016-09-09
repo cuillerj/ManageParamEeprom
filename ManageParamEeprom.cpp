@@ -35,7 +35,7 @@ ManageParamEeprom::ManageParamEeprom ( uint8_t numberParam, int offset,char keyw
 void ManageParamEeprom::Init()
 	{
 	Serial.print("EEPROM initialization");
-#if defined ESP8266Mode
+#if defined ESP_H              // means ESP8266
 	EEPROM.begin(_sizeKey+2);
 #endif
 	Serial.println();
@@ -57,7 +57,7 @@ void ManageParamEeprom::Init()
 			EEPROM.write(_sizeKey + 1, _numberParam);
 			Serial.print(".");
 		}
-#if defined ESP8266Mode
+#if defined ESP_H
 	EEPROM.commit();
 	delay(1000);
 #endif
@@ -66,13 +66,13 @@ void ManageParamEeprom::Init()
 	
 void ManageParamEeprom::PrintVersion()
 	{
-#if defined ESP8266Mode
+#if defined ESP_H
 		EEPROM.begin(maxEepromSize);
 #endif
 #if defined ARDUINOMode
 //	Serial.println("compile mode arduino");
 #endif	
-#if defined ESP8266Mode 
+#if defined ESP_H 
 	Serial.println("mode compile esp8266");
 #endif
 		Serial.print("Version:");
@@ -90,7 +90,7 @@ void ManageParamEeprom::PrintVersion()
 	
 uint8_t ManageParamEeprom::GetVersion()
 	{
-#if defined ESP8266Mode
+#if defined ESP_H
 	EEPROM.begin(_sizeKey+2);
 #endif
 	boolean keyOk=true;
@@ -116,14 +116,14 @@ uint8_t ManageParamEeprom::GetVersion()
 	
 int ManageParamEeprom::GetParameterNumber()
 	{
-#if defined ESP8266Mode
+#if defined ESP_H
 	EEPROM.begin(_sizeKey+2);
 #endif
 		return (EEPROM.read(_sizeKey+1)) ;
 	}
 parameter ManageParamEeprom::GetParameter(uint8_t number)
 	{
-#if defined ESP8266Mode
+#if defined ESP_H
 		EEPROM.begin(maxEepromSize);
 #endif
 		parameter rc = { -1, "ko"};
@@ -155,7 +155,7 @@ parameter ManageParamEeprom::GetParameter(uint8_t number)
 	}
 numericParameter ManageParamEeprom::GetNumericParameter(uint8_t number)
 	{
-#if defined ESP8266Mode
+#if defined ESP_H
 		EEPROM.begin(maxEepromSize);
 #endif
 		numericParameter  rc = { -1, 0};
@@ -195,7 +195,7 @@ numericParameter ManageParamEeprom::GetNumericParameter(uint8_t number)
 	}
 int ManageParamEeprom::SetParameter(uint8_t number, uint8_t len, byte value[maxParameterLen])
 	{
-#if defined ESP8266Mode
+#if defined ESP_H
 		EEPROM.begin(maxEepromSize);
 #endif
 		int shift=_sizeKey+2;
@@ -228,7 +228,7 @@ int ManageParamEeprom::SetParameter(uint8_t number, uint8_t len, byte value[maxP
 				Serial.print(".");
 			}
 		}
-#if defined ESP8266Mode
+#if defined ESP_H
 		EEPROM.commit();
 		delay(1000);
 #endif
@@ -237,7 +237,7 @@ int ManageParamEeprom::SetParameter(uint8_t number, uint8_t len, byte value[maxP
 	}
 void ManageParamEeprom::Dump(unsigned int dumpOffset,unsigned int nbByte)
 	{
-#if defined ESP8266Mode
+#if defined ESP_H
 		EEPROM.begin(maxEepromSize);
 #endif
 		for (int i = 0; i < nbByte; i++)
@@ -256,7 +256,7 @@ void ManageParamEeprom::Erase(boolean paramtersOnly)
 			startByte=startByte+_sizeKey+2;
 			endByte=endByte-(_sizeKey+2);
 		}
-#if defined ESP8266Mode
+#if defined ESP_H
 		EEPROM.begin(maxEepromSize);
 #endif
 		Serial.print("Erase starting from:");
@@ -271,7 +271,7 @@ void ManageParamEeprom::Erase(boolean paramtersOnly)
 			}
 
 		}
-#if defined ESP8266Mode
+#if defined ESP_H
 		EEPROM.commit();
 		delay(2000);
 #endif

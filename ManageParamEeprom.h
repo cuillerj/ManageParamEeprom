@@ -1,9 +1,9 @@
 /*
-
+	run on arduino and esp8266
 */
 #include <Arduino.h>
 #include <EEPROM.h>
-#include <eepromMode.h>   // needed to identify the microcontroler type
+#include <eepromMode.h>   //  to define some common values
 
 typedef struct {int parameterLen; char parameterValue[maxParameterLen];} parameter;
 typedef struct {int parameterLen; unsigned int parameterNumericValue;} numericParameter;
